@@ -6,6 +6,8 @@ function food(x,y,boardsize,width,height){
     this.y = y;
     this.width = width;
     this.height = height;
+    var img = new Image();
+    img.src = "images/food.png"
 
 
     this.getX = function(){
@@ -23,6 +25,7 @@ function food(x,y,boardsize,width,height){
     this.draw = function(){
         this.x = Math.floor(Math.random()*(this.boardsize-10+1)+0);
         this.y = Math.floor(Math.random()*(this.boardsize-10+1)+0);
+        board.fillStyle = board.createPattern(img, "repeat");
         board.fillRect(this.x,this.y,this.width,this.height);
     };
 

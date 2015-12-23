@@ -12,12 +12,14 @@ function player(x,y,width,height){
     this.counter = 0;
     this.locations = new Array();
     this.locations[0] = [x,y];
+    var img = new Image();
+    img.src = "images/player.gif"
 
     this.draw = function(){
         board.clearRect(this.oldx,this.oldy,this.width,this.height);
         for(var i = 0; i < this.locations.length; i++){
             board.fillRect(this.locations[i][0],this.locations[i][1],this.width,this.height);
-            board.fillStyle = "#FFFF00"
+            board.fillStyle = board.createPattern(img, "repeat");
             board.fillRect(this.locations[i][0],this.locations[i][1],10,10);
         }
         this.oldx = this.locations[this.locations.length - 1][0];
