@@ -11,6 +11,9 @@ food.draw();
 var direction = 87;
 var requestID;
 var counter = 0;
+var music = document.getElementById('music');
+
+new Audio('images/Metroid_Door-Brandino480-995195341.mp3').play();
 
 
 //WASD LIIKKUU
@@ -100,6 +103,18 @@ function animate() {
 animate();
 
 function gameOver(){
+    var div = document.createElement('div');
+    document.body.appendChild(div);
+    div.innerHTML = '<h1>GAME OVER!</h1>';
+    var button = document.createElement('button');
+    document.body.appendChild(button);
+    document.getElementsByTagName("button")[0].setAttribute("id", "retry");
+    button.innerHTML = '<h3>Start Over</h3>';
+    document.getElementById("retry").addEventListener("click", function(){
+    window.location.reload();
+    });
+    music.remove();
+    music = new Audio('images/Air Horn-SoundBible.com-964603082.mp3').play();
     console.log(player.getPoints());
     cancelAnimationFrame(requestID);
     player.draw();
