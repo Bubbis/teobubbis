@@ -1,4 +1,5 @@
 function player(x,y,width,height){
+    //x ja y vaa starttaus pisteita, lokaatiot tallennetaan this.locations
     var c = document.getElementById("GameBoard");
     var board = c.getContext("2d");
     this.oldx = x;
@@ -13,17 +14,16 @@ function player(x,y,width,height){
     this.locations[0] = [x,y];
 
     this.draw = function(){
-        board.clearRect(this.oldx,this.oldy,10,10);
+        board.clearRect(this.oldx,this.oldy,this.width,this.height);
         for(var i = 0; i < this.locations.length; i++){
-            board.fillRect(this.locations[i][0],this.locations[i][1],10,10);
+            board.fillRect(this.locations[i][0],this.locations[i][1],this.width,this.height);
         }
-        this.oldx = this.locations[0][0];
-        this.oldy = this.locations[0][1];
+        this.oldx = this.locations[this.locations.length - 1][0];
+        this.oldy = this.locations[this.locations.length - 1][1];
     };
 
     this.addPoints = function(){
         this.points = this.points + 1;
-        this.counter = this.counter + 1;
         this.locations.push([this.oldx,this.oldy]);
     };
 
@@ -38,20 +38,24 @@ function player(x,y,width,height){
         return this.locations[0][1];
     };
 
-    this.addY = function(speed){
-        this.locations[0][1] = this.locations[0][1] + speed;
+    this.addY = function(){
+        this.locations.unshift([this.locations[0][0],(this.locations[0][1] + this.height)]);
+        this.locations.pop();
     };
 
-    this.extractY = function(speed){
-        this.locations[0][1] = this.locations[0][1] - speed;
+    this.extractY = function(){
+        this.locations.unshift([this.locations[0][0],(this.locations[0][1] - this.height)]);
+        this.locations.pop();
     };
 
-    this.addX = function(speed){
-        this.locations[0][0] = this.locations[0][0] + speed;
+    this.addX = function(){
+        this.locations.unshift([(this.locations[0][0]+this.width),this.locations[0][1]])
+        this.locations.pop();
     };
 
-    this.extractX = function(speed){
-        this.locations[0][0] = this.locations[0][0] - speed;
+    this.extractX = function(){
+        this.locations.unshift([(this.locations[0][0]-this.width),this.locations[0][1]])
+        this.locations.pop();
     };
 
     this.getWidth = function(){
@@ -61,4 +65,8 @@ function player(x,y,width,height){
     this.getHeight = function(){
         return this.height;
     };
+
+    this.getLocations = function(){
+        return this.locations;
+    }
 }

@@ -21,8 +21,8 @@ function food(x,y,boardsize,width,height){
     };
 
     this.draw = function(){
-        this.x = Math.floor(Math.random()*(this.boardsize-0+1)+0);
-        this.y = Math.floor(Math.random()*(this.boardsize-0+1)+0);
+        this.x = Math.floor(Math.random()*(this.boardsize-10+1)+0);
+        this.y = Math.floor(Math.random()*(this.boardsize-10+1)+0);
         board.fillRect(this.x,this.y,this.width,this.height);
     };
 

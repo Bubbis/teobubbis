@@ -2,10 +2,15 @@ var c = document.getElementById("GameBoard");
 var board = c.getContext("2d");
 var lastone;
 var player = new player(170,170,10,10);
+var playerWidth = player.getWidth();
+var playerHeight = player.getHeight();
 var food = new food(200,200,350,10,10);
+var foodWidth = food.getWidth();
+var foodHeight = food.getHeight();
 food.draw();
 var direction = 87;
 var requestID;
+var counter = 0;
 
 
 //WASD LIIKKUU
@@ -34,37 +39,62 @@ listenkey();
 
 
 var update = function(speed){
-    if (direction == 87){//w
-        player.extractY(speed);
+    var locations = player.getLocations();
+    if(counter == speed) {
+        if (direction == 87) {//w
+            player.extractY();
+        }
+        if (direction == 83) {//s
+            player.addY();
+        }
+        if (direction == 65) {//a
+            player.extractX();
+        }
+        if (direction == 68) {//d
+            player.addX();
+        }
+        //Tormaystesti seiniin
+        if (player.getX() > 330 || player.getY() > 330 || player.getX() < 10 || player.getY() < 20) {
+            gameOver();
+        }
+        //Tormaystesti ruokaan
+        for(var i=0;i<locations.length;i++) {
+            if (locations[i][0] <= (food.getX() + foodWidth)
+                && food.getX() <= (locations[i][0] + playerWidth)
+                && locations[i][1] <= (food.getY() + foodHeight)
+                && food.getY() <= (playerHeight + locations[i][1])) {
+                player.addPoints();
+                food.clear();
+                food.draw();
+            }
+        }
+        //Tormaystesti omaan hantaan
+        for(var i=0;i<locations.length;i++){
+            for(var k=0;k<locations.length;k++){
+                if(i==k){
+                    //do nothing
+                }
+                else{
+                    if(locations[i][0] < (locations[k][0]+playerWidth)
+                    && locations[k][0] < (locations[i][0]+playerWidth)
+                    && locations[i][1] < (locations[k][1]+playerHeight)
+                    && locations[k][1] < (locations[i][1]+playerHeight)){
+                        gameOver();
+                    }
+                }
+            }
+        }
+        counter = 0;
     }
-    if(direction == 83){//s
-        player.addY(speed);
-    }
-    if(direction == 65){//a
-        player.extractX(speed);
-    }
-    if(direction == 68){//d
-        player.addX(speed);
-    }
-    //Tormaystesti seiniin
-    if(player.getX()>340 || player.getY()>340 || player.getX()<0 || player.getY()<0){
-        gameOver();
-    }
-    //Tormaystesti ruokaan
-    if(player.getX()<=(food.getX() + food.getWidth())
-        &&food.getX()<=(player.getX() + player.getWidth())
-        &&player.getY()<=(food.getY() + food.getHeight())
-        &&food.getY()<=(player.getHeight() + player.getY())){
-        player.addPoints();
-        food.clear();
-        food.draw();
+    else{
+        counter = counter + 1;
     }
 
 };
 
 function animate() {
     requestID = requestAnimationFrame(animate);
-    update(2);
+    update(8);
     player.draw();
 }
 animate();
@@ -72,4 +102,5 @@ animate();
 function gameOver(){
     console.log(player.getPoints());
     cancelAnimationFrame(requestID);
+    player.draw();
 }
