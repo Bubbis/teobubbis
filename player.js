@@ -15,6 +15,7 @@ function player(x,y,width,height){
     this.draw = function(){
         board.clearRect(this.oldx,this.oldy,10,10);
         for(var i = 0; i < this.locations.length; i++){
+            board.fillStyle = "#FFFF00"
             board.fillRect(this.locations[i][0],this.locations[i][1],10,10);
         }
         this.oldx = this.locations[0][0];
