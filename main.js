@@ -57,7 +57,7 @@ var update = function(speed){
             player.addX();
         }
         //Tormaystesti seiniin
-        if (player.getX() > 330 || player.getY() > 330 || player.getX() < 10 || player.getY() < 10) {
+        if (player.getX() > 340 || player.getY() > 340 || player.getX() < 0 || player.getY() < 0) {
             gameOver();
         }
         //Tormaystesti ruokaan
