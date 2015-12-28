@@ -29,6 +29,7 @@ function player(x,y,width,height){
     this.addPoints = function(){
         this.points = this.points + 1;
         this.locations.push([this.oldx,this.oldy]);
+        document.getElementById('yourPoints').innerHTML = "Points: " + this.points;
     };
 
     this.getPoints = function(){
