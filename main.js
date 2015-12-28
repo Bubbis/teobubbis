@@ -69,6 +69,7 @@ var update = function(speed){
                 player.addPoints();
                 food.clear();
                 food.draw();
+                return
             }
         }
         //Tormaystesti omaan hantaan
